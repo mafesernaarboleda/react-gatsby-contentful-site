@@ -196,10 +196,10 @@ const Jobs = () => (
       `}
       render={({ allContentfulJobs }) => (
         <CardContainer minWidth="350px">
-          {allContentfulJobs.edges.map((p, i) => {
-            const { id } = { ...p.node }
+          {allContentfulJobs.edges.map(({ node }, i) => {
+            const { id } = { ...node }
             return (<Fade bottom delay={i * 200} key={id}>
-              <Job {...p.node} />
+              <Job {...node} />
             </Fade>)
           })}
         </CardContainer>

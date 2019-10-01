@@ -31,17 +31,23 @@ const Footer = () => (
         contentfulAbout {
           name
           roles
-          socialLinks {
-            id
-            url
-            name
-            fontAwesomeIcon
+        }
+        allContentfulSocialLink {
+          edges{
+            node {
+              id
+              url
+              name
+              fontAwesomeIcon
+            }
           }
         }
       }
     `}
-    render={data => {
-      const { name, socialLinks } = data.contentfulAbout;
+    render={({ contentfulAbout, allContentfulSocialLink }) => {
+
+      const { name } = contentfulAbout;
+      const { edges: socialLinks } = allContentfulSocialLink
 
       return (
         <Box p={3} backgroundColor="primaryDark" as="footer">
@@ -61,11 +67,14 @@ const Footer = () => (
             </Fade>
             <Flex>
               <Fade right>
-                {socialLinks.map(({ id, ...rest }) => (
-                  <Box mx={[2, 3]} fontSize={[4, 5]} key={id}>
-                    <SocialLink {...rest} color="background" />
-                  </Box>
-                ))}
+                {socialLinks.map(({ node }) => {
+                  const { id } = { ...node }
+                  return (
+                    <Box mx={[2, 3]} fontSize={[4, 5]} key={id}>
+                      <SocialLink {...node} color="background" />
+                    </Box>
+                  )
+                })}
               </Fade>
             </Flex>
           </FooterContainer>

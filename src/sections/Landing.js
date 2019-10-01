@@ -49,11 +49,15 @@ const LandingPage = () => (
           contentfulAbout {
             name
             roles
-            socialLinks {
-              id
-              url
-              name
-              fontAwesomeIcon
+          }
+          allContentfulSocialLink {
+            edges{
+              node {
+                id
+                url
+                name
+                fontAwesomeIcon
+              }
             }
           }
           site {
@@ -63,8 +67,9 @@ const LandingPage = () => (
           }
         }
       `}
-      render={({ contentfulAbout, site }) => {
-        const { name, socialLinks, roles } = contentfulAbout;
+      render={({ contentfulAbout, site, allContentfulSocialLink }) => {
+        const { name, roles } = contentfulAbout;
+        const { edges: socialLinks } = allContentfulSocialLink
         const { deterministicBehaviour } = site.siteMetadata;
 
         return (
@@ -99,11 +104,14 @@ const LandingPage = () => (
             </Heading>
 
             <Flex alignItems="center" justifyContent="center" flexWrap="wrap">
-              {socialLinks.map(({ id, ...rest }) => (
-                <Box mx={3} fontSize={[5, 6, 6]} key={id}>
-                  <SocialLink {...rest} />
-                </Box>
-              ))}
+              {socialLinks.map(({ node }) => {
+                const { id } = { ...node }
+                return (
+                  <Box mx={3} fontSize={[5, 6, 6]} key={id}>
+                    <SocialLink {...node} />
+                  </Box>
+                )
+              })}
             </Flex>
             <SectionLink section="about">
               {({ onClick }) => <MouseIcon onClick={onClick} />}
