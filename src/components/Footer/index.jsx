@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { StaticQuery, graphql } from 'gatsby';
 import { Text, Box, Link, Flex } from 'rebass';
 import Fade from 'react-reveal/Fade';
-import SocialLink from './SocialLink';
+import SocialLink from '../SocialLink';
 
 const FooterContainer = styled.div`
   min-width: 320px;
@@ -33,7 +33,7 @@ const Footer = () => (
           roles
         }
         allContentfulSocialLink {
-          edges{
+          edges {
             node {
               id
               url
@@ -45,9 +45,8 @@ const Footer = () => (
       }
     `}
     render={({ contentfulAbout, allContentfulSocialLink }) => {
-
       const { name } = contentfulAbout;
-      const { edges: socialLinks } = allContentfulSocialLink
+      const { edges: socialLinks } = allContentfulSocialLink;
 
       return (
         <Box p={3} backgroundColor="primaryDark" as="footer">
@@ -68,12 +67,12 @@ const Footer = () => (
             <Flex>
               <Fade right>
                 {socialLinks.map(({ node }) => {
-                  const { id } = { ...node }
+                  const { id } = { ...node };
                   return (
                     <Box mx={[2, 3]} fontSize={[4, 5]} key={id}>
                       <SocialLink {...node} color="background" />
                     </Box>
-                  )
+                  );
                 })}
               </Fade>
             </Flex>

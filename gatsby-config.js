@@ -22,6 +22,15 @@ const plugins = [
     },
   },
   {
+    resolve: 'gatsby-source-apiserver',
+    options: {
+      typePrefix: 'internal',
+      url: 'https://scrapp-slide.herokuapp.com/api/scrap/find/mafeserna',
+      method: 'get',
+      name: 'slides',
+    },
+  },
+  {
     resolve: 'gatsby-plugin-manifest',
     options: manifestConfig,
   },
@@ -38,7 +47,6 @@ const plugins = [
 ];
 
 module.exports = client.getEntries().then(entries => {
-
   if (ANALYTICS_ID) {
     plugins.push({
       resolve: 'gatsby-plugin-google-analytics',

@@ -6,43 +6,37 @@ import { SectionLink } from 'react-scroll-section';
 import Section from '../components/Section';
 import SocialLink from '../components/SocialLink';
 import MouseIcon from '../components/MouseIcon';
-import Triangle from '../components/Triangle';
 
-const Background = () => (
-  <div>
-    <Triangle
-      color="backgroundDark"
-      height={['35vh', '80vh']}
-      width={['95vw', '60vw']}
-    />
-
-    <Triangle
-      color="secondary"
-      height={['38vh', '80vh']}
-      width={['50vw', '35vw']}
-    />
-
-    <Triangle
-      color="primaryDark"
-      height={['25vh', '35vh']}
-      width={['75vw', '60vw']}
-      invertX
-    />
-
-    <Triangle
-      color="backgroundDark"
-      height={['20vh', '20vh']}
-      width={['100vw', '100vw']}
-      invertX
-      invertY
-    />
-  </div>
-);
+const triangles = [
+  {
+    color: 'backgroundDark',
+    height: ['35vh', '80vh'],
+    width: ['95vw', '60vw'],
+  },
+  {
+    color: 'secondary',
+    height: ['38vh', '80vh'],
+    width: ['50vw', '35vw'],
+  },
+  {
+    color: 'primaryDark',
+    height: ['25vh', '35vh'],
+    width: ['75vw', '60vw'],
+    invertX: true,
+  },
+  {
+    color: 'backgroundDark',
+    height: ['20vh', '20vh'],
+    width: ['100vw', '100vw'],
+    invertX: true,
+    invertY: true,
+  },
+];
 
 const centerHorizontally = { marginRight: 'auto', marginLeft: 'auto' };
 
 const LandingPage = () => (
-  <Section.Container id="home" Background={Background}>
+  <Section.Container id="home" triangles={triangles}>
     <StaticQuery
       query={graphql`
         query SiteTitleQuery {
@@ -51,7 +45,7 @@ const LandingPage = () => (
             roles
           }
           allContentfulSocialLink {
-            edges{
+            edges {
               node {
                 id
                 url
@@ -69,7 +63,7 @@ const LandingPage = () => (
       `}
       render={({ contentfulAbout, site, allContentfulSocialLink }) => {
         const { name, roles } = contentfulAbout;
-        const { edges: socialLinks } = allContentfulSocialLink
+        const { edges: socialLinks } = allContentfulSocialLink;
         const { deterministicBehaviour } = site.siteMetadata;
 
         return (
@@ -105,12 +99,12 @@ const LandingPage = () => (
 
             <Flex alignItems="center" justifyContent="center" flexWrap="wrap">
               {socialLinks.map(({ node }) => {
-                const { id } = { ...node }
+                const { id } = { ...node };
                 return (
                   <Box mx={3} fontSize={[5, 6, 6]} key={id}>
                     <SocialLink {...node} />
                   </Box>
-                )
+                );
               })}
             </Flex>
             <SectionLink section="about">

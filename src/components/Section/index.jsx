@@ -4,7 +4,8 @@ import { Section } from 'react-scroll-section';
 import { Heading } from 'rebass';
 import PropTypes from 'prop-types';
 import Slide from 'react-reveal/Slide';
-import LinkAnimated from './LinkAnimated';
+import LinkAnimated from '../LinkAnimated';
+import Background from '../Background';
 
 const SectionContainer = styled.div`
   min-height: 100vh;
@@ -19,11 +20,9 @@ const SectionContainer = styled.div`
   scroll-behavior: smooth;
 `;
 
-const DefaultBackground = () => <div />;
-
-const Container = ({ id, children, Background = DefaultBackground }) => (
+const Container = ({ id, children, triangles }) => (
   <Section id={id} style={{ position: 'relative' }}>
-    <Background />
+    <Background triangles={triangles} />
     <SectionContainer>{children}</SectionContainer>
   </Section>
 );
@@ -31,7 +30,7 @@ const Container = ({ id, children, Background = DefaultBackground }) => (
 Container.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  Background: PropTypes.func,
+  triangles: PropTypes.array,
 };
 
 const Header = ({ name, icon = '', label = '' }) => (
